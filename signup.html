@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="global.css">
     <link rel="stylesheet" href="signup.css">
     <link rel="stylesheet" href="fonts/stylesheet.css">
+    <script src="signup.js" defer></script>
 </head>
 <body>
     <section class="header">
@@ -17,31 +18,44 @@
                     <li><a href="" class="btn">about us</a></li>
                     <li><a href="" class="btn">dashboard</a></li>
                     <li><a href="" class="btn">info</a></li>
-                    <li><a href="" class="login-btn">sign up</a></li>
+                    <li><a href="" class="login-btn">login</a></li>
                 </ul>
             </div>
         </nav>
     </section>
     
-    <section class="login">
-        
-        <h2>login</h2>
-        <form id="loginForm" onsubmit="validateForm(); return false;">
-            <div class="fieldname">
-                <label for="username">Username</label>
-                <input type="text" id="username" required>
-                <label for="password">Password</label>
-                <input type="password" id="password" required>
-            </div>
+    <section class="signup">
+        <h2>sign up</h2>
+        <hr>
+        <form class="fieldname" id="signupForm">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
             
-            <div class="error-message" id="error-message"></div>
-
-            <button type="submit">L O G I N</button><br>
-
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <label for="firstname">First Name</label>
+            <input type="text" id="firstname" name="firstname" required>
+            
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" name="lastname" required>
+            
+            <label for="birthdate">Birthdate</label>
+            <input type="date" id="birthdate" name="birthdate" required>
+            
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" required>
+            
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required>
+            
+            <br><hr><br>
+            <button type="submit">Sign Up</button>
         </form>
     </section>
-    
-    
     
     <section class="footer">
         <div class="cr">

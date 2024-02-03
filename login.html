@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="global.css">
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="fonts/stylesheet.css">
+    <script src="login.js" defer></script>
 </head>
 <body>
     <section class="header">
@@ -24,21 +25,17 @@
     </section>
     
     <section class="login">
-        <img src="images/ellipse-8.svg" alt="">
         <h2>login</h2>
         <hr>
-        <form id="loginForm" onsubmit="validateForm(); return false;">
-            <div class="fieldname">
-                <label for="username">Username</label>
-                <input type="text" id="username" required>
-                <label for="password">Password</label>
-                <input type="password" id="password" required>
-            </div>
+        <form class="fieldname" id="loginForm">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
             
-            <div class="error-message" id="error-message"></div>
-
-            <button type="submit">L O G I N</button><br>
-
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <br><hr><br>
+            <button type="submit">L O G I N</button>
         </form>
     </section>
     
