@@ -8,7 +8,7 @@
 .signup h2{
     font-size: 72px;
     font-weight: 500;
-    padding: 2%;
+    padding: 1%;
 }
 
 .signup hr{
@@ -16,15 +16,16 @@
     height: 3px;
     background-color: black;
     border: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .fieldname{
     display: flex;
     flex-direction: column;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
 }
 
 .fieldname label{
@@ -40,6 +41,15 @@
     background-color: #BDD0D7;
     border-radius: 12px;
     font-size: 18px;
+}
+
+.fieldname hr{
+    width: 500px;
+    height: 3px;
+    background-color: black;
+    border: 0px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 button{

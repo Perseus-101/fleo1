@@ -13,29 +13,19 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Get form data
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = 'calvin';
+    $password = 'qaz123';
 
     // Prepare and execute SQL statement to fetch user by username
     $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->execute([$username]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Debug: Check the fetched user data and password verification
-    var_dump($user);
-    var_dump(password_verify($password, $user['passwordhash']));
-
     // Check if the user exists and the password is correct
     if ($user && password_verify($password, $user['passwordhash'])) {
-        // Start a session and store the user ID
-        session_start();
-        $_SESSION['user_id'] = $user['userid'];
-
         // Redirect to dashboard.html after successful login
         header("Location: dashboard.html");
-        exit();
-    } else {
-        // Invalid credentials
+    } else{
         echo "<script>alert('Invalid credentials');</script>";
     }
 } catch (PDOException $e) {

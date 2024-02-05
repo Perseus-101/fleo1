@@ -1,5 +1,42 @@
-document.getElementById("signupForm").addEventListener("submit", function (event) {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+    const signUpForm = document.getElementById("signupForm");
+
+    signUpForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Validate form data
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const phone = document.getElementById("phone").value;
+
+        // Validate username length
+        if (username.length < 4) {
+            alert("Username should be at least 4 characters long.");
+            return;
+        }
+
+        // Validate email format
+        if (!validateEmail(email)) {
+            alert("Invalid email format.");
+            return;
+        }
+
+        // Validate password format
+        if (!validatePassword(password)) {
+            alert("Password should contain both alphabets and numbers.");
+            return;
+        }
+
+        // Validate phone number format
+        if (!validatePhoneNumber(phone)) {
+            alert("Phone number should be in the format of 10 digits.");
+            return;
+        }
+
+        // If all validations pass, submit the form
+        signUpForm.submit();
+    });
 
     // Function to validate email format
     function validateEmail(email) {
@@ -21,51 +58,4 @@ document.getElementById("signupForm").addEventListener("submit", function (event
         const phoneRegex = /^\d{10}$/;
         return phoneRegex.test(phone);
     }
-
-    // Validate username length
-    const username = document.getElementById("username").value;
-    if (username.length < 4) {
-        alert("Username should be at least 4 characters long.");
-        return;
-    }
-
-    // Validate email format
-    const email = document.getElementById("email").value;
-    if (!validateEmail(email)) {
-        alert("Invalid email format.");
-        return;
-    }
-
-    // Validate password format
-    const password = document.getElementById("password").value;
-    if (!validatePassword(password)) {
-        alert("Password should contain both alphabets and numbers.");
-        return;
-    }
-
-    // Validate phone number format
-    const phone = document.getElementById("phone").value;
-    if (!validatePhoneNumber(phone)) {
-        alert("Phone number should be in the format of 10 digits.");
-        return;
-    }
-
-    // If all validations pass, proceed with form submission
-    var formData = new FormData(this);
-
-    fetch("signup.php", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert("Signup successful! Redirecting to login page.");
-            // Redirect to login.html
-            window.location.href = "login.html";
-        } else {
-            alert("Signup failed. Please try again.");
-        }
-    })
-    .catch(error => console.error("Error:", error));
 });

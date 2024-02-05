@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="global.css">
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="fonts/stylesheet.css">
-    <script src="login.js" defer></script>
 </head>
 <body>
     <section class="header">
@@ -27,19 +26,19 @@
     <section class="login">
         <h2>login</h2>
         <hr>
-        <form class="fieldname" id="loginForm">
+        <form class="fieldname" id="loginForm" action="login.php" method="post">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
             
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
             
-            <br><hr><br>
+            <hr>
             <button type="submit">L O G I N</button>
         </form>
     </section>
     
-    
+    <script src="login.js" defer></script>
     
     <section class="footer">
         <div class="cr">

@@ -8,6 +8,21 @@
     <link rel="stylesheet" href="fonts/stylesheet.css">
 </head>
 <body>
-    
+    <h1>HELLO GUYS!</h1>
+
+    <?php
+    session_start();
+
+    // Check if the user is logged in
+    if (isset($_SESSION['user_id'])) {
+        $userId = $_SESSION['user_id'];
+        echo "<p>User ID: $userId</p>";
+    } else {
+        // Redirect to the login page if not logged in
+        header("Location: login.html");
+        exit();
+    }
+    ?>
+
 </body>
 </html>
