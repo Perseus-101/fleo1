@@ -10,3 +10,14 @@ CREATE TABLE users (
     phone VARCHAR(10),
     regdate DATE
 );
+
+CREATE TABLE financial_record (
+    dataid SERIAL PRIMARY KEY,
+    userid INT REFERENCES users(userid),
+    amount NUMERIC(10,2),
+    transaction_date DATE,
+    currency VARCHAR(3),
+    account_type VARCHAR(50),
+    category VARCHAR(50),
+    description VARCHAR(255)
+);
