@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Info</title>
+    <title>Financial Info</title>
     <link rel="stylesheet" href="../global.css">
-    <link rel="stylesheet" href="personal-info.css">
+    <link rel="stylesheet" href="financial-info.css">
     <link rel="stylesheet" href="../fonts/stylesheet.css">
 </head>
 <body>
@@ -23,48 +23,63 @@
         </nav>
       </section>
 
-    <section class="personal-info">
-        
+    <section class="financial-info">
 
-        <?php
-      
+      <?php
       session_start();
-
+      
       // Check if the user is logged in
       if (!isset($_SESSION['user_id'])) {
           echo "Error: User not logged in";
           exit();
       }
-
+      
       require_once('../config.php');
-
+      
       try {
           // Prepare and execute SQL statement to fetch user's data
-          $stmt = $conn->prepare("SELECT firstname, lastname, email, birthdate, phone, address FROM users WHERE userid = ?");
+          $stmt = $conn->prepare("SELECT dataid, amount, transaction_date, currency, account_type, category, description FROM financial_record WHERE userid = ?");
           $stmt->execute([$_SESSION['user_id']]);
-          $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-          // Calculate user's age based on birthdate
-          $birthdate = new DateTime($user['birthdate']);
-          $today = new DateTime();
-          $age = $birthdate->diff($today)->y;
-
-          echo "<div class='user-data'>";
-          // Display the user's data
-          echo "<h2>Personal Info</h2>";
-          echo "<p><span class='label'>First Name:</span> <span class='value'>" . $user['firstname'] . "</span></p>";
-          echo "<p><span class='label'>Last Name:</span> <span class='value'>" . $user['lastname'] . "</span></p>";
-          echo "<p><span class='label'>Email:</span> <span class='value'>" . $user['email'] . "</span></p>";
-          echo "<p><span class='label'>Age:</span> <span class='value'>" . $age . "</span></p>";
-          echo "<p><span class='label'>Phone Number:</span> <span class='value'>" . $user['phone'] . "</span></p>";
-          echo "<p><span class='label'>Address:</span> <span class='value'>" . $user['address'] . "</span></p>";
-          echo "</div>";
-
+          $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
       } catch (PDOException $e) {
-          // Log or display the detailed error message
           echo "Error: " . $e->getMessage();
+          die();
       }
-      ?>
+      ?>      
+
+    <h2>Financial Records</h2><br>
+    <form action="delete_records.php" method="post">
+      <table class="financial-table">
+          <tr>
+              <th style="width: 8%;">Data ID</th>
+              <th style="width: 12%;">Amount</th>
+              <th style="width: 7%;">Currency</th>
+              <th style="width: 12%;">Transaction Date</th>
+              <th style="width: 13%;">Account Type</th>
+              <th style="width: 10%;">Category</th>
+              <th style="width: 30%;">Description</th>
+              <th style="width: 8%;">Delete</th>
+          </tr>
+          <?php foreach ($records as $record): ?>
+          <tr>
+              <td><?php echo $record['dataid']; ?></td>
+              <td><?php echo $record['amount']; ?></td>
+              <td><?php echo $record['currency']; ?></td>
+              <td><?php echo $record['transaction_date']; ?></td>
+              <td><?php echo $record['account_type']; ?></td>
+              <td><?php echo $record['category']; ?></td>
+              <td><?php echo $record['description']; ?></td>
+              <td><input type="checkbox" name="delete_ids[]" value="<?php echo $record['dataid']; ?>"></td>
+          </tr>
+          <?php endforeach; ?>
+      </table>
+      <div class="btn-1">
+        <a class="btn-2" href="update-financial-info.html">update</a>
+        <button class="btn-2" type="submit">delete</button>
+      </div>
+    </form>
+
+
 
     </section>
 

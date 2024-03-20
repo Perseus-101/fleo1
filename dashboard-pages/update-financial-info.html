@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Info</title>
+    <link rel="stylesheet" href="../global.css">
+    <link rel="stylesheet" href="update-financial-info.css">
+    <link rel="stylesheet" href="../fonts/stylesheet.css">
+</head>
+<body>
+    <section class="header-dash">
+        <nav>
+          <h3>Hello, user!</h3>
+          <div class="nav-links-dash">
+            <ul>
+              <li><a href="financial-info.php" class="btn">back</a></li>
+            </ul>
+          </div>
+        </nav>
+      </section>
+
+    <section class="financial-info">
+      <div class="financial-form">
+        <h2>update financial records</h2>
+        <hr>
+        <form action="update-financial-info.php" method="post">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" required>
+            
+            <label for="transaction_date">Transaction Date:</label>
+            <input type="date" id="transaction_date" name="transaction_date" required>
+            
+            <label for="currency">Currency:</label>
+            <select id="currency" name="currency" required>
+                <option value="INR">Rupee</option>
+                <option value="USD">Dollar</option>
+                <option value="EUR">Euro</option>
+            </select>
+            
+            <label for="account_type">Account Type:</label>
+            <select id="account_type" name="account_type" required>
+                <option value="Savings">Savings</option>
+                <option value="Checkings">Checkings</option>
+            </select>
+            
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required>
+            
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required>
+            
+            <hr>
+            <button type="submit">update</button>
+        </form>
+      </div>
+    </section>
+
+</body>
+</html>

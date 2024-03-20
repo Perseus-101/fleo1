@@ -4,8 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Info</title>
     <link rel="stylesheet" href="../global.css">
-    <link rel="stylesheet" href="personal-info.css">
+    <link rel="stylesheet" href="portfolio.css">
     <link rel="stylesheet" href="../fonts/stylesheet.css">
+    <script src="portfolio.js"></script>
 </head>
 <body>
     <section class="header-dash">
@@ -23,48 +24,57 @@
         </nav>
       </section>
 
-    <section class="personal-info">
-        
-
-        <?php
-      
+    <section class="portfolio">
+     
+      <?php
       session_start();
-
+      
       // Check if the user is logged in
       if (!isset($_SESSION['user_id'])) {
           echo "Error: User not logged in";
           exit();
       }
-
+      
       require_once('../config.php');
-
+      
       try {
           // Prepare and execute SQL statement to fetch user's data
-          $stmt = $conn->prepare("SELECT firstname, lastname, email, birthdate, phone, address FROM users WHERE userid = ?");
+          $stmt = $conn->prepare("SELECT portfolioid, assetname, quantity, purchasevalue, currentvalue FROM portfolio WHERE userid = ?");
           $stmt->execute([$_SESSION['user_id']]);
-          $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-          // Calculate user's age based on birthdate
-          $birthdate = new DateTime($user['birthdate']);
-          $today = new DateTime();
-          $age = $birthdate->diff($today)->y;
-
-          echo "<div class='user-data'>";
-          // Display the user's data
-          echo "<h2>Personal Info</h2>";
-          echo "<p><span class='label'>First Name:</span> <span class='value'>" . $user['firstname'] . "</span></p>";
-          echo "<p><span class='label'>Last Name:</span> <span class='value'>" . $user['lastname'] . "</span></p>";
-          echo "<p><span class='label'>Email:</span> <span class='value'>" . $user['email'] . "</span></p>";
-          echo "<p><span class='label'>Age:</span> <span class='value'>" . $age . "</span></p>";
-          echo "<p><span class='label'>Phone Number:</span> <span class='value'>" . $user['phone'] . "</span></p>";
-          echo "<p><span class='label'>Address:</span> <span class='value'>" . $user['address'] . "</span></p>";
-          echo "</div>";
-
+          $portfolio = $stmt->fetchAll(PDO::FETCH_ASSOC);
       } catch (PDOException $e) {
-          // Log or display the detailed error message
           echo "Error: " . $e->getMessage();
+          die();
       }
-      ?>
+      ?>  
+
+      <h2>Portfolio</h2><br>
+    <form action="delete_portfolio.php" method="post">
+      <table class="portfolio-table">
+          <tr>
+              <th style="width: 10%;">Portfolio ID</th>
+              <th style="width: 30%;">Asset Name</th>
+              <th style="width: 10%;">Quantity</th>
+              <th style="width: 15%;">Purchase Value</th>
+              <th style="width: 15%;">Current Value</th>
+              <th style="width: 10%;">Delete</th>
+          </tr>
+          <?php foreach ($portfolio as $item): ?>
+          <tr>
+              <td><?php echo $item['portfolioid']; ?></td>
+              <td><?php echo $item['assetname']; ?></td>
+              <td><?php echo $item['quantity']; ?></td>
+              <td><?php echo $item['purchasevalue']; ?></td>
+              <td><?php echo $item['currentvalue']; ?></td>
+              <td><input type="checkbox" name="delete_ids[]" value="<?php echo $item['portfolioid']; ?>"></td>
+          </tr>
+          <?php endforeach; ?>
+      </table>
+      <div class="btn-1">
+        <a class="btn-2" href="update-portfolio.html">update</a>
+        <button class="btn-2" type="submit">delete</button>
+      </div>
+    </form>
 
     </section>
 

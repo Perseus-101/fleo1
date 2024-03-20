@@ -19,7 +19,7 @@ try {
         $_SESSION['user_id'] = $user['userid'];
 
         // Redirect to dashboard.html after successful login
-        header("Location: dashboard.html");
+        header("Location: ../dashboard-pages/dashboard.html");
         exit();
     } else {
         // Invalid credentials

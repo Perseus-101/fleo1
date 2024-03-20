@@ -1,0 +1,71 @@
+.financial-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.financial-form h2{
+    font-size: 48px;
+    font-weight: 500;
+    padding: 0%;
+}
+
+.financial-form hr{
+    width: 500px;
+    height: 3px;
+    background-color: black;
+    border: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.financial-form form{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.financial-form form label{
+    font-size: 26px;
+    font-weight: 500;
+    padding: 10px 0px;
+}
+
+.financial-form form input{
+    width: 300px;
+    height: 35px;
+    border: 5px solid #BDD0D7; 
+    background-color: #BDD0D7;
+    border-radius: 12px;
+    font-size: 18px;
+}
+
+.financial-form form select{
+    width: 300px;
+    height: 45px;
+    border: 5px solid #BDD0D7; 
+    background-color: #BDD0D7;
+    border-radius: 12px;
+    font-size: 18px;
+}
+
+.financial-form form button{
+    width: 300px;
+    height: 50px;
+    border: 2px solid #3A98B9;
+    background-color: #3A98B9;
+    color: lightblue;
+    border-radius: 20px;
+    font-size: 26px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.financial-form form button:hover{
+    border: 2px solid #03A9F4;
+    background-color: whitesmoke;
+    transition: 1s;
+    color: black;
+}

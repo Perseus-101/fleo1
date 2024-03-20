@@ -21,3 +21,12 @@ CREATE TABLE financial_record (
     category VARCHAR(50),
     description VARCHAR(255)
 );
+ 
+CREATE TABLE portfolio (
+    portfolioid SERIAL PRIMARY KEY,
+    userid INT REFERENCES users(userid),
+    assetname CHAR(50),
+    quantity INT,
+    purchasevalue FLOAT,
+    currentvalue FLOAT
+);
