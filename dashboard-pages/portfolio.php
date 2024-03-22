@@ -73,6 +73,7 @@
       <div class="btn-1">
         <a class="btn-2" href="update-portfolio.html">update</a>
         <button class="btn-2" type="submit">delete</button>
+        <button class="btn-2" onclick="window.print()">Print to PDF</button>
       </div>
     </form>
 

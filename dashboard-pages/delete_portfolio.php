@@ -23,7 +23,7 @@
         echo "Selected records deleted successfully.";
         header("Location: portfolio.php");
     } else {
-        echo "Error: No records selected for deletion.";
+        header("Location: portfolio.php");
     }
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
