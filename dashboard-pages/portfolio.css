@@ -28,6 +28,16 @@
     align-items: center;
     font-size: 30px;
     font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.portfolio h3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 10px;
 }
 
 .portfolio-table {

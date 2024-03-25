@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo "Error: User not logged in";
+    header("../content-pages/login.html");
+    exit();
+}
+
+require_once('../config.php');
+
+// Execute the Python script to generate a new graph image
+$user_id = $_SESSION['user_id'];
+exec('python generate_graph.py ' . $user_id);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +28,7 @@
 <body>
     <section class="header-dash">
         <nav>
-          <h3>Hello, user!</h3>
+          <h3>Hello, <?php echo $firstname = $conn->query("SELECT firstname FROM users WHERE userid = {$_SESSION['user_id']}")->fetchColumn(); ?> !</h3>
           <div class="nav-links-dash">
             <ul>
               <li><a href="dashboard.html" class="btn">dashboard</a></li>
@@ -24,7 +42,16 @@
       </section>
 
     <section class="dashboard">
-          <h1 style="min-height: 80vh;">Connecting to psql server and python charts remaing...</h1>
+          <div class="sec1">
+          <img id="graph" src="graph.png" alt="Graph">
+            <p>hello</p>
+          </div>
+          <div class="sec2">
+            <?php
+
+            ?>
+            <p>hello</p>
+          </div>
     </section>
 
     <section class="footer">

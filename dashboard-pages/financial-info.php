@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo "Error: User not logged in";
+    header("../content-pages/login.html");
+    exit();
+}
+
+require_once('../config.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,10 +24,10 @@
 <body>
     <section class="header-dash">
         <nav>
-          <h3>Hello, user!</h3>
+          <h3>Hello, <?php echo $firstname = $conn->query("SELECT firstname FROM users WHERE userid = {$_SESSION['user_id']}")->fetchColumn(); ?> !</h3>
           <div class="nav-links-dash">
             <ul>
-              <li><a href="dashboard.html" class="btn">dashboard</a></li>
+              <li><a href="dashboard.php" class="btn">dashboard</a></li>
               <li><a href="personal-info.php" class="btn">personal info</a></li>
               <li><a href="financial-info.php" class="btn">financial info</a></li>
               <li><a href="portfolio.php" class="btn">portfolio</a></li>
@@ -26,28 +40,29 @@
     <section class="financial-info">
 
       <?php
-      session_start();
-      
-      // Check if the user is logged in
-      if (!isset($_SESSION['user_id'])) {
-          echo "Error: User not logged in";
-          exit();
-      }
-      
-      require_once('../config.php');
-      
       try {
           // Prepare and execute SQL statement to fetch user's data
-          $stmt = $conn->prepare("SELECT dataid, amount, transaction_date, currency, account_type, category, description FROM financial_record WHERE userid = ?");
+          $stmt = $conn->prepare("SELECT dataid, amount, transaction_date, currency, account_type, category, description FROM financial_record WHERE userid = ? AND amount > 0 AND amount IS NOT NULL");
           $stmt->execute([$_SESSION['user_id']]);
           $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
-      } catch (PDOException $e) {
-          echo "Error: " . $e->getMessage();
-          die();
-      }
-      ?>      
 
-    <h2>Financial Records</h2><br>
+          $stmt2 = $conn->prepare("SELECT salary_expenditure FROM financial_record WHERE userid = ? ORDER BY dataid DESC LIMIT 1");
+          $stmt2->execute([$_SESSION['user_id']]);
+          $results = $stmt2->fetch(PDO::FETCH_ASSOC); // Use fetch() instead of fetchAll()
+
+          // Check if a row was found
+          if ($results) {
+              $maximum_allowance = $results['salary_expenditure'];
+              echo '<h2><u>Financial Records</u></h2>';
+              echo '<h3>Your maximum allowance is $' . $maximum_allowance . '</h3>';
+          } else {
+              echo 'No data found for the user.';
+          }
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+                die();
+            }
+            ?>   
     <form action="delete_records.php" method="post">
       <table class="financial-table">
           <tr>

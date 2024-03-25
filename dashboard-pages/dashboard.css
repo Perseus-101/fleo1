@@ -1,0 +1,17 @@
+.dashboard{
+    display: flex;
+    justify-content: space-evenly;
+
+    min-height: 80vh;
+}
+
+.sec1{
+    background-color: red;
+    min-width: 90vh;
+
+}
+
+.sec2{
+    background-color: aqua;
+    min-width: 90vh;
+}

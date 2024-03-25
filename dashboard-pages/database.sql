@@ -6,6 +6,7 @@ CREATE TABLE users (
     firstname VARCHAR(50),
     lastname VARCHAR(50),
     birthdate DATE,
+    salary INTEGER,
     address VARCHAR(255),
     phone VARCHAR(10),
     regdate DATE
@@ -19,7 +20,8 @@ CREATE TABLE financial_record (
     currency VARCHAR(3),
     account_type VARCHAR(50),
     category VARCHAR(50),
-    description VARCHAR(255)
+    description VARCHAR(255),
+    salary_expenditure integer
 );
  
 CREATE TABLE portfolio (
@@ -28,5 +30,7 @@ CREATE TABLE portfolio (
     assetname CHAR(50),
     quantity INT,
     purchasevalue FLOAT,
-    currentvalue FLOAT
+    currentvalue FLOAT,
+    salary_allowance integer
 );
+
