@@ -1,7 +1,5 @@
 <?php
-
 require_once('../config.php');
-
 try {
     // Get form data
     $username = $_POST['username'];
@@ -23,7 +21,12 @@ try {
         exit();
     } else {
         // Invalid credentials
-        echo "<script>alert('Invalid credentials');</script>";
+        echo "<script>
+            var confirmed = confirm('Invalid credentials');
+            if (confirmed) {
+                window.location.href = 'login.html';
+            }
+        </script>";
     }
 } catch (PDOException $e) {
     // Log or display the detailed error message

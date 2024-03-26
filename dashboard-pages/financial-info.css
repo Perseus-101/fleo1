@@ -1,5 +1,15 @@
+body{
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 .financial-info{
-    min-height: 80vh;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .btn-1{
@@ -19,6 +29,7 @@
     background-color: #3A98B9;
     padding: 10px 20px;
     border-radius: 50px;
+    cursor: pointer;
 }
 
 .financial-info h2{
@@ -48,7 +59,7 @@
 .financial-table th {
     padding: 8px;
     text-align: center;
-    background-color: pink;
+    background-color: plum;
     font-size: 22px;
     font-weight: 500;
 } 

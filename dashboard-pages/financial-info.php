@@ -37,7 +37,7 @@ require_once('../config.php');
         </nav>
       </section>
 
-    <section class="financial-info">
+    <section id="printable-section" class="financial-info">
 
       <?php
       try {
@@ -91,7 +91,27 @@ require_once('../config.php');
       <div class="btn-1">
         <a class="btn-2" href="update-financial-info.html">update</a>
         <button class="btn-2" type="submit">delete</button>
-        <button class="btn-2" onclick="window.print()">Print to PDF</button>
+        <button class="btn-2" onclick="printSection()">Print Section</button>
+         <script>
+        function printSection() {
+            // Get the content of the printable section
+            var content = document.getElementById("printable-section").innerHTML;
+            
+            // Create a new temporary window
+            var printWindow = window.open();
+            
+            // Write the content to the new window
+            printWindow.document.write(content);
+            
+            // Print the content from the new window
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+            
+            // Close the temporary window (optional)
+            // printWindow.close();
+        }
+    </script>
       </div>
     </form>
 
@@ -101,7 +121,7 @@ require_once('../config.php');
 
     <section class="footer">
       <div class="cr">
-        <p>©2024 FLEO, INC. All Rights Reserved</p>
+        <p>&copy;2024 FLEO, INC. All Rights Reserved</p>
       </div>
       <div class="foot">
         <div class="pageguide pg1">

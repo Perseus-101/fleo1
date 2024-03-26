@@ -54,7 +54,7 @@ require_once('../config.php');
 
           echo "<div class='user-data'>";
           // Display the user's data
-          echo "<h2>Personal Info</h2>";
+          echo "<h2><u>Personal Info</u></h2>";
           echo "<p><span class='label'>First Name:</span> <span class='value'>" . $user['firstname'] . "</span></p>";
           echo "<p><span class='label'>Last Name:</span> <span class='value'>" . $user['lastname'] . "</span></p>";
           echo "<p><span class='label'>Email:</span> <span class='value'>" . $user['email'] . "</span></p>";
@@ -73,7 +73,7 @@ require_once('../config.php');
 
     <section class="footer">
       <div class="cr">
-        <p>©2024 FLEO, INC. All Rights Reserved</p>
+        <p>&copy;2024 FLEO, INC. All Rights Reserved</p>
       </div>
       <div class="foot">
         <div class="pageguide pg1">

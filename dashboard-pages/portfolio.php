@@ -97,7 +97,7 @@ require_once('../config.php');
 
     <section class="footer">
       <div class="cr">
-        <p>©2024 FLEO, INC. All Rights Reserved</p>
+        <p>&copy;2024 FLEO, INC. All Rights Reserved</p>
       </div>
       <div class="foot">
         <div class="pageguide pg1">

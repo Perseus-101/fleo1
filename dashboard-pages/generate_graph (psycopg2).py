@@ -1,7 +1,7 @@
 import matplotlib
 matplotlib.use('Agg')  # Use the 'Agg' backend for non-interactive mode
 import matplotlib.pyplot as plt
-import pyodbc
+import psycopg2 
 import sys
 from datetime import datetime, timedelta
 import matplotlib.dates as mdates
@@ -14,17 +14,23 @@ outfit_medium = FontProperties(fname="../fonts/Outfit-Medium.ttf")
 # Get the user_id from command-line arguments
 user_id = sys.argv[1]
 
-# Connect to the PostgreSQL database using pyodbc
-conn_str = "DRIVER={PostgreSQL Unicode};Server=localhost;Database=fleo;UID=postgres;PWD=percy;"
-conn = pyodbc.connect(conn_str)
-cursor = conn.cursor()
+# Connect to the PostgreSQL database
+conn = psycopg2.connect(
+    host="localhost",
+    database="fleo",
+    user="postgres",
+    password="percy"
+)
+
+# Create a cursor object
+cur = conn.cursor()
 
 # Retrieve data from the portfolio table for the given user_id
-cursor.execute("SELECT assetname, purchasevalue, currentvalue FROM portfolio WHERE userid = ?", (user_id,))
-portfolio_data = cursor.fetchall()
+cur.execute("SELECT assetname, purchasevalue, currentvalue FROM portfolio WHERE userid = %s", (user_id,))
+portfolio_data = cur.fetchall()
 
 # Close the database connection
-cursor.close()
+cur.close()
 conn.close()
 
 # Filter out None values
@@ -40,7 +46,7 @@ start_time = datetime(2024, 3, 25, 9, 0)  # Year, month, day, hour, minute
 time_interval = timedelta(hours=1)
 
 # Create the plot
-fig, ax = plt.subplots(figsize=(11.5, 6.5))
+fig, ax = plt.subplots(figsize=(10.5, 6))
 ax.set_ylim(0, max_price * 1.1)  # Set the y-axis limits (price range)
 ax.set_facecolor('whitesmoke')  # Set background color
 ax.grid(True, linestyle='--', linewidth=0.5, color='lightgray')  # Add grid lines
@@ -53,8 +59,8 @@ for asset, purchase_value, current_value in portfolio_data:
     line, = ax.plot([purchase_time, current_time], [purchase_value, current_value], marker='o', label=asset, linewidth=2)
 
     # Add annotations for purchase value and current value
-    ax.annotate(f"{purchase_value:.2f}", (purchase_time, purchase_value), xytext=(5, 5), textcoords='offset points', fontsize=9, fontproperties=outfit_regular)
-    ax.annotate(f"{current_value:.2f}", (current_time, current_value), xytext=(5, 5), textcoords='offset points', fontsize=9, fontproperties=outfit_regular)
+    ax.annotate(f"{purchase_value:.2f}", (purchase_time, purchase_value), xytext=(5, 5), textcoords='offset points', fontsize=8, fontproperties=outfit_regular)
+    ax.annotate(f"{current_value:.2f}", (current_time, current_value), xytext=(5, 5), textcoords='offset points', fontsize=8, fontproperties=outfit_regular)
 
     # Add tooltip functionality
     tooltip = plt.gca().get_figure().canvas.mpl_connect("motion_notify_event", lambda event: on_plot_hover(event, line, purchase_time, purchase_value, current_time, current_value))
@@ -62,15 +68,15 @@ for asset, purchase_value, current_value in portfolio_data:
     # Increment the start time for the next data point
     start_time += time_interval
 
-ax.set_xlabel('Time', fontsize=14, fontproperties=outfit_medium)
-ax.set_ylabel('Price (Rupees)', fontsize=14, fontproperties=outfit_medium)
-ax.legend(fontsize=11, prop=outfit_medium)
+ax.set_xlabel('Time', fontsize=12, fontproperties=outfit_medium)
+ax.set_ylabel('Price (Rupees)', fontsize=12, fontproperties=outfit_medium)
+ax.legend(fontsize=10, prop=outfit_medium)
 
 # Rotate x-axis labels for better visibility
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-plt.xticks(rotation=45, fontsize=9, fontproperties=outfit_regular)
+plt.xticks(rotation=45, fontsize=8, fontproperties=outfit_regular)
 
-plt.yticks(fontsize=9,fontproperties=outfit_regular)
+plt.yticks(fontproperties=outfit_regular)
 
 # Save the plot as an image file
 plt.savefig('graph.png', bbox_inches='tight')
