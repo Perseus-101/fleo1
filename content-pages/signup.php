@@ -11,14 +11,15 @@ try {
     $lastname = $_POST['lastname'];
     $birthdate = $_POST['birthdate'];
     $salary = $_POST['salary'];
+    $saving = $_POST['salary']*0.4;
     $address = $_POST['address'];
     $phone = $_POST['phone'];
     $regdate = date("Y-m-d");
 
     // Prepare and execute SQL statement
-    $sql = "INSERT INTO users (username, email, password, firstname, lastname, birthdate, salary, address, phone, regdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (username, email, password, firstname, lastname, birthdate, salary, saving, address, phone, regdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$username, $email, $password, $firstname, $lastname, $birthdate, $salary, $address, $phone, $regdate]);
+    $stmt->execute([$username, $email, $password, $firstname, $lastname, $birthdate, $salary, $saving, $address, $phone, $regdate]);
 
     // Get the last inserted user ID
     $userid = $conn->lastInsertId();

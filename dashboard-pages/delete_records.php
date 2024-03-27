@@ -19,23 +19,49 @@ try {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $total_deleted_amount = $result['total_amount'] ?? 0;
 
-        // Retrieve the current salary_expenditure for the logged-in user
-        $sql = "SELECT salary_expenditure FROM financial_record WHERE userid = ? ORDER BY dataid DESC LIMIT 1";
-        $stmt = $conn->prepare($sql);
+        // Retrieve user's salary and current savings
+        $stmt = $conn->prepare("SELECT salary, saving FROM users WHERE userid = ?");
         $stmt->execute([$_SESSION['user_id']]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $current_salary_expenditure = $result['salary_expenditure'] ?? 0;
+        $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
+        $salary = $user_info['salary'] ?? 0;
+        $current_saving = $user_info['saving'] ?? 0;
 
-        // Calculate the new salary_expenditure
-        $new_salary_expenditure = $current_salary_expenditure + $total_deleted_amount;
+        // Calculate maximum savings amount (40% of salary)
+        $max_saving = 0.4 * $salary;
+
+        // Calculate new saving and remaining amount after filling the savings
+        $new_saving = $current_saving + $total_deleted_amount;
+        $remaining_amount = 0;
+
+        if ($new_saving > $max_saving) {
+            $remaining_amount = $new_saving - $max_saving;
+            $new_saving = $max_saving;
+        }
+
+        // Update user's savings
+        $stmt = $conn->prepare("UPDATE users SET saving = ? WHERE userid = ?");
+        $stmt->execute([$new_saving, $_SESSION['user_id']]);
+
+        // Update salary_expenditure if there is remaining amount after filling savings
+        if ($remaining_amount > 0) {
+            // Retrieve the current salary_expenditure for the logged-in user
+            $sql = "SELECT salary_expenditure FROM financial_record WHERE userid = ? ORDER BY dataid DESC LIMIT 1";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$_SESSION['user_id']]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $current_salary_expenditure = $result['salary_expenditure'] ?? 0;
+
+            // Calculate the new salary_expenditure
+            $new_salary_expenditure = $current_salary_expenditure + $remaining_amount;
+
+            // Insert the new salary_expenditure
+            $stmt = $conn->prepare("INSERT INTO financial_record (userid, salary_expenditure) VALUES (?, ?)");
+            $stmt->execute([$_SESSION['user_id'], $new_salary_expenditure]);
+        }
 
         // Delete the selected records
         $stmt = $conn->prepare("DELETE FROM financial_record WHERE dataid IN ($placeholders)");
         $stmt->execute($delete_ids);
-
-        // Insert the new salary_expenditure
-        $stmt = $conn->prepare("INSERT INTO financial_record (userid, salary_expenditure) VALUES (?, ?)");
-        $stmt->execute([$_SESSION['user_id'], $new_salary_expenditure]);
 
         echo "Selected records deleted successfully.";
         header("Location: financial-info.php");
@@ -46,4 +72,5 @@ try {
     echo "Error: " . $e->getMessage();
     die();
 }
+
 ?>

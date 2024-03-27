@@ -48,13 +48,18 @@ require_once('../config.php');
 
           $stmt2 = $conn->prepare("SELECT salary_expenditure FROM financial_record WHERE userid = ? ORDER BY dataid DESC LIMIT 1");
           $stmt2->execute([$_SESSION['user_id']]);
-          $results = $stmt2->fetch(PDO::FETCH_ASSOC); // Use fetch() instead of fetchAll()
+          $results = $stmt2->fetch(PDO::FETCH_ASSOC); 
+
+          $stmt3 = $conn->prepare("SELECT saving FROM users WHERE userid = ? LIMIT 1");
+          $stmt3->execute([$_SESSION['user_id']]);
+          $results2 = $stmt3->fetch(PDO::FETCH_ASSOC);
 
           // Check if a row was found
           if ($results) {
               $maximum_allowance = $results['salary_expenditure'];
+              $savings = $results2['saving'];
               echo '<h2><u>Financial Records</u></h2>';
-              echo '<h3>Your maximum allowance is $' . $maximum_allowance . '</h3>';
+              echo '<h3>Your maximum allowance is $' . $maximum_allowance . ' and your saving is $' . $savings . '</h3>';
           } else {
               echo 'No data found for the user.';
           }

@@ -45,7 +45,7 @@ exec('python generate_graph.py ' . $user_id);
           <div class="info-row">
               <div class="info-group">
                   <h5>Your Salary: <?php $salary = $conn->query("SELECT salary FROM users WHERE userid = {$_SESSION['user_id']}")->fetchColumn(); echo number_format($salary, 2); ?></h5>
-                  <h5>Savings: <?php $savings = $conn->query("SELECT salary * 0.4 FROM users WHERE userid = {$_SESSION['user_id']}")->fetchColumn(); echo number_format($savings, 2); ?></h5>
+                  <h5>Savings: <?php $savings = $conn->query("SELECT saving FROM users WHERE userid = {$_SESSION['user_id']}")->fetchColumn(); echo number_format($savings, 2); ?></h5>
               </div>
           </div>
           <div class="info-row">

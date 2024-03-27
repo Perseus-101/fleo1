@@ -7,6 +7,7 @@ CREATE TABLE users (
     lastname VARCHAR(50),
     birthdate DATE,
     salary INTEGER,
+    saving INTEGER,
     address VARCHAR(255),
     phone VARCHAR(10),
     regdate DATE
