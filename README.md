@@ -76,3 +76,12 @@ fleo1/
 ├── images/               # Project images
 ├── config.php            # Database configuration
 └── README.md             # Project README file
+```
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and create a pull request with your updates.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
